@@ -875,29 +875,50 @@
     // Data handling
     function loadData() {
       // Load products
-      try {
-        products = JSON.parse(localStorage.getItem('alagha_menu_items')) || [];
-      } catch (e) { products = []; }
+      const cachedMenu = localStorage.getItem('alagha_menu_items');
+      if (cachedMenu === null) {
+        products = [];
+      } else {
+        try {
+          products = JSON.parse(cachedMenu) || [];
+        } catch (e) {
+          products = [];
+        }
+      }
 
-      // Load hero images (updated default paths to existing files)
-      try {
-        heroImages = JSON.parse(localStorage.getItem('alagha_hero_images')) || [
+      // Load hero images
+      const cachedHero = localStorage.getItem('alagha_hero_images');
+      if (cachedHero === null) {
+        heroImages = [
           'image/restaurant_3.jpg',
           'image/restaurant_6.jpg',
           'image/restaurant_7.jpg'
         ];
-      } catch (e) { heroImages = []; }
+      } else {
+        try {
+          heroImages = JSON.parse(cachedHero) || [];
+        } catch (e) {
+          heroImages = [];
+        }
+      }
 
-      // Load gallery images (updated default paths to existing files)
-      try {
-        galleryImages = JSON.parse(localStorage.getItem('alagha_gallery_images')) || [
+      // Load gallery images
+      const cachedGallery = localStorage.getItem('alagha_gallery_images');
+      if (cachedGallery === null) {
+        galleryImages = [
           { src: 'image/restaurant_1.jpg', caption: 'جلساتنا وصالاتنا العائلية الفاخرة' },
           { src: 'image/restaurant_2.jpg', caption: 'أجواء ممتازة وخدمة راقية للزبائن' },
           { src: 'image/restaurant_3.jpg', caption: 'سيخ الشاورما البلدي من الآغا' },
           { src: 'image/restaurant_6.jpg', caption: 'وجبات غربية وسندويشات بنكهات ممتازة' },
           { src: 'image/restaurant_7.jpg', caption: 'مشويات الآغا الفاخرة على الفحم' }
         ];
-      } catch (e) { galleryImages = []; }
+      } else {
+        try {
+          galleryImages = JSON.parse(cachedGallery) || [];
+        } catch (e) {
+          galleryImages = [];
+        }
+      }
     }
 
     function saveData(key, data) {

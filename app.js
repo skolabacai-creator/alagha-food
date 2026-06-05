@@ -168,14 +168,18 @@ const DEFAULT_MENU_ITEMS = [
 ];
 
 let MENU_ITEMS = [];
-try {
-  MENU_ITEMS = JSON.parse(localStorage.getItem('alagha_menu_items'));
-} catch (e) {}
-if (!MENU_ITEMS || !Array.isArray(MENU_ITEMS) || MENU_ITEMS.length === 0) {
+const cachedMenu = localStorage.getItem('alagha_menu_items');
+if (cachedMenu === null) {
   MENU_ITEMS = DEFAULT_MENU_ITEMS;
   try {
     localStorage.setItem('alagha_menu_items', JSON.stringify(DEFAULT_MENU_ITEMS));
   } catch (e) {}
+} else {
+  try {
+    MENU_ITEMS = JSON.parse(cachedMenu) || [];
+  } catch (e) {
+    MENU_ITEMS = [];
+  }
 }
 
 const CAT_LABELS = {
@@ -282,14 +286,18 @@ const DEFAULT_HERO_IMAGES = [
 ];
 
 let heroImages = [];
-try {
-  heroImages = JSON.parse(localStorage.getItem('alagha_hero_images'));
-} catch (e) {}
-if (!heroImages || !Array.isArray(heroImages) || heroImages.length === 0) {
+const cachedHero = localStorage.getItem('alagha_hero_images');
+if (cachedHero === null) {
   heroImages = DEFAULT_HERO_IMAGES;
   try {
     localStorage.setItem('alagha_hero_images', JSON.stringify(DEFAULT_HERO_IMAGES));
   } catch (e) {}
+} else {
+  try {
+    heroImages = JSON.parse(cachedHero) || [];
+  } catch (e) {
+    heroImages = [];
+  }
 }
 
 function initHeroCarousel() {
@@ -545,14 +553,18 @@ const DEFAULT_GALLERY_IMAGES = [
 ];
 
 let galleryImages = [];
-try {
-  galleryImages = JSON.parse(localStorage.getItem('alagha_gallery_images'));
-} catch (e) {}
-if (!galleryImages || !Array.isArray(galleryImages) || galleryImages.length === 0) {
+const cachedGallery = localStorage.getItem('alagha_gallery_images');
+if (cachedGallery === null) {
   galleryImages = DEFAULT_GALLERY_IMAGES;
   try {
     localStorage.setItem('alagha_gallery_images', JSON.stringify(DEFAULT_GALLERY_IMAGES));
   } catch (e) {}
+} else {
+  try {
+    galleryImages = JSON.parse(cachedGallery) || [];
+  } catch (e) {
+    galleryImages = [];
+  }
 }
 
 function renderGallery() {
@@ -614,7 +626,7 @@ async function syncWithFirestore() {
     const menuDoc = await db.collection('alagha_store').doc('menu').get();
     if (menuDoc.exists) {
       const remoteMenu = menuDoc.data().items;
-      if (remoteMenu && Array.isArray(remoteMenu) && remoteMenu.length > 0) {
+      if (remoteMenu && Array.isArray(remoteMenu)) {
         MENU_ITEMS = remoteMenu;
         localStorage.setItem('alagha_menu_items', JSON.stringify(remoteMenu));
         renderMenu(currentCat);
@@ -625,7 +637,7 @@ async function syncWithFirestore() {
     const heroDoc = await db.collection('alagha_store').doc('hero').get();
     if (heroDoc.exists) {
       const remoteHero = heroDoc.data().images;
-      if (remoteHero && Array.isArray(remoteHero) && remoteHero.length > 0) {
+      if (remoteHero && Array.isArray(remoteHero)) {
         heroImages = remoteHero;
         localStorage.setItem('alagha_hero_images', JSON.stringify(remoteHero));
       }
@@ -635,7 +647,7 @@ async function syncWithFirestore() {
     const galleryDoc = await db.collection('alagha_store').doc('gallery').get();
     if (galleryDoc.exists) {
       const remoteGallery = galleryDoc.data().images;
-      if (remoteGallery && Array.isArray(remoteGallery) && remoteGallery.length > 0) {
+      if (remoteGallery && Array.isArray(remoteGallery)) {
         galleryImages = remoteGallery;
         localStorage.setItem('alagha_gallery_images', JSON.stringify(remoteGallery));
         renderGallery();
