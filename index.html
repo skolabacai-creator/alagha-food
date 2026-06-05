@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="مطعم فروج وبروستد الآغا في منبج - ألذ شاورما، بروستد ذهبي مقرمش، مشويات على الفحم وأكلات غربية شهية. تصفح القائمة واطلب مباشرة عبر الواتساب.">
+  <title>الآغا · فروج وبروستد | منبج</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- STICKY NAVIGATION -->
+<nav id="nav">
+  <a href="#" class="nav-brand">
+    <img src="logo.png" alt="شعار مطعم الآغا" class="logo-img">
+  </a>
+  <div class="nav-links">
+    <a href="#" class="nav-link active">الرئيسية</a>
+    <a href="#how-to-order" class="nav-link">طريقة الطلب</a>
+    <a href="#menu" class="nav-link">قائمة الطعام</a>
+    <a href="#gallery" class="nav-link">معرض الصور</a>
+    <a href="#about" class="nav-link">عن المطعم</a>
+    <a href="#contact" class="nav-link">التواصل</a>
+  </div>
+  <button class="cart-btn" id="cartBtn" aria-label="سلة الطلبات">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
+  <button class="burger" id="burger" aria-label="قائمة المحمول">
+    <span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" class="mm-link">الرئيسية</a>
+  <a href="#how-to-order" class="mm-link">طريقة الطلب</a>
+  <a href="#menu" class="mm-link">قائمة الطعام</a>
+  <a href="#gallery" class="mm-link">معرض الصور</a>
+  <a href="#about" class="mm-link">عن المطعم</a>
+  <a href="#contact" class="mm-link">التواصل</a>
+</div>
+
+<!-- HERO WITH BACKGROUND AD SLIDESHOW -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-img-wrap">
+      <img src="image/restaurant_3.jpg" alt="شاورما مطعم الآغا" id="heroImg">
+    </div>
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <p class="hero-tag">منبج · سوريا</p>
+    <h1>مطعم<br><em>الآغا</em></h1>
+    <p class="hero-sub">فروج وبروستد · شاورما · مشويات على الفحم · أكلات غربية</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-main">تصفح القائمة</a>
+      <a href="https://wa.me/963900000000" target="_blank" class="btn-wa">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        طلب واتساب
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <svg width="16" height="24" viewBox="0 0 16 24"><rect x="5" y="3" width="6" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="17" x2="8" y2="21" stroke="currentColor" stroke-width="1.5"/></svg>
+  </div>
+</section>
+
+<!-- BRAND PILLARS -->
+<section class="pillars">
+  <div class="pillar">
+    <span class="pillar-num">١٠+</span>
+    <span class="pillar-label">سنوات خبرة</span>
+  </div>
+  <div class="pillar-div"></div>
+  <div class="pillar">
+    <span class="pillar-num">طازج</span>
+    <span class="pillar-label">يومياً بلا استثناء</span>
+  </div>
+  <div class="pillar-div"></div>
+  <div class="pillar">
+    <span class="pillar-num">توصيل</span>
+    <span class="pillar-label">لكل أحياء منبج</span>
+  </div>
+  <div class="pillar-div"></div>
+  <div class="pillar">
+    <span class="pillar-num">واتساب</span>
+    <span class="pillar-label">طلب مباشر وسريع</span>
+  </div>
+</section>
+
+<!-- HOW TO ORDER (GUIDE STEPS) -->
+<section class="how-to-order-section" id="how-to-order">
+  <div class="wrap">
+    <div class="section-head" style="text-align: center;">
+      <p class="section-eyebrow">طريقة الطلب السهلة</p>
+      <h2>كيف تطلب وجبتك في 3 خطوات؟</h2>
+    </div>
+    
+    <div class="instructions-steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4>اختر وجبتك المفضلة</h4>
+        <p>تصفح المنيو الفاخر. استخدم زر <strong>"طلب سريع ⚡"</strong> لإرسال طلب فوري لوجبة واحدة، أو اضغط <strong>"+ السلة 🛒"</strong> لطلب عدة وجبات معاً.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4>أدخل الاسم والعنوان</h4>
+        <p>بعد اختيار وجباتك وتجميعها، افتح السلة في أي وقت واكتب اسمك الكريم وعنوانك بدقة لضمان توصيل سريع وحار.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4>أرسل الطلب للواتساب</h4>
+        <p>اضغط زر <strong>"تأكيد وإرسال"</strong>. سيفتح الواتساب بمحادثة جاهزة تحتوي على وجباتك وحسابك الإجمالي، أرسلها بضغطة زر وتأكد طلبك فوراً!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIGITAL MENU -->
+<section class="menu-section" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-eyebrow">قائمة الطعام</p>
+      <h2>استكشف أشهى المأكولات</h2>
+      <p>اختر وجبتك وأضفها للسلة أو اطلب مباشرة بطلب سريع</p>
+    </div>
+
+    <div class="cats">
+      <button class="cat-btn active" data-cat="all">الكل</button>
+      <button class="cat-btn" data-cat="shawarma">شاورما</button>
+      <button class="cat-btn" data-cat="broasted">بروستد</button>
+      <button class="cat-btn" data-cat="grilled">مشويات</button>
+      <button class="cat-btn" data-cat="western">غربي</button>
+      <button class="cat-btn" data-cat="sides">إضافات ومشروبات</button>
+    </div>
+
+    <div class="food-grid" id="foodGrid">
+      <div class="loading-menu">جاري تحميل القائمة الفاخرة...</div>
+    </div>
+  </div>
+</section>
+
+<!-- REAL IMAGE GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="wrap">
+    <div class="section-head" style="text-align: center;">
+      <p class="section-eyebrow">معرض الصور</p>
+      <h2>صور حقيقية من داخل مطعم الآغا</h2>
+    </div>
+    <p class="gallery-desc">أجواء صالاتنا العائلية المريحة، لقطات من مطابخنا المجهزة، وعمليات تحضير الطعام الطازج يومياً.</p>
+
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- يتم تحميل الصور ديناميكياً بواسطة الجافاسكريبت -->
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-img-col">
+    <img src="image/restaurant_7.jpg" alt="مشويات الآغا الفاخرة">
+    <div class="about-tag">منذ أكثر من ١٠ سنوات</div>
+  </div>
+  <div class="about-text-col">
+    <p class="section-eyebrow">قصتنا</p>
+    <h2>طعم الأصالة<br>في كل لقمة</h2>
+    <p>في مطعم فروج وبروستد الآغا، نؤمن أن الطعم اللذيذ يبدأ من المكونات الطازجة. كل دجاجة تُختار وتُنظف بعناية فائقة وتُتبّل بخلطتنا السرية التي توارثناها لنضمن لكم نكهة لا تنسى وقرمشة لا تضاهى.</p>
+    <p>نحرص على تقديم أشهى المأكولات من شاورما دجاج، بروستد ذهبي، مشويات على الفحم وأكلات غربية متكاملة بأسعار ممتازة تناسب الجميع.</p>
+    <div class="about-facts">
+      <div class="fact">
+        <strong>التتبيلة السرية للآغا</strong>
+        <span>بهارات فريدة محددة بعناية</span>
+      </div>
+      <div class="fact">
+        <strong>دجاج محلي طازج</strong>
+        <span>نذبح يومياً، جودة مضمونة</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT & LOCATION -->
+<section class="contact-section" id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <p class="section-eyebrow">تواصل معنا</p>
+      <h2>نحن هنا<br>لخدمتكم دائماً</h2>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="ci-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 5.61 5.61l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+          </div>
+          <div>
+            <strong>هاتف المطعم للطلب</strong>
+            <a href="tel:0900000000">09XX-XXX-XXX</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div>
+            <strong>واتساب الطلبات</strong>
+            <a href="https://wa.me/963900000000" target="_blank">محادثة مباشرة</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <strong>العنوان الجغرافي</strong>
+            <span>طريق حلب، مقابل مدرسة مصطفى البكار — منبج، سوريا</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <strong>ساعات العمل اليومية</strong>
+            <span>من ١٢:٠٠ ظهراً حتى ١٢:٠٠ منتصف الليل</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="social-links-container">
+        <h4>صفحاتنا على وسائل التواصل</h4>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/share/1HZzSJ6qg5/?mibextid=wwXIfr" target="_blank" class="social-icon fb" aria-label="فيسبوك">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://wa.me/963900000000" target="_blank" class="social-icon wa" aria-label="واتساب">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="contact-map">
+      <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=600&q=70" alt="موقع مطعم الآغا في منبج">
+      <a href="https://www.google.com/maps/search/?api=1&query=%D9%85%D9%86%D8%A8%D8%AC+%D9%85%D8%B7%D8%B9%D9%85+%D8%A7%D9%84%D8%A2%D8%BA%D8%A7" target="_blank" class="map-link">فتح في خرائط Google ←</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner wrap">
+    <div class="footer-brand">
+      <img src="logo.png" alt="شعار مطعم الآغا" class="logo-img" style="height: 48px; width: auto; margin-left: 12px;">
+      <p>طعم الأصالة ونظافة تليق بعائلتكم · منبج، سوريا</p>
+    </div>
+    <p class="footer-copy">© 2026 مطعم فروج وبروستد الآغا · جميع الحقوق محفوظة</p>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR DRAWER -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-side" id="cartSide">
+  <div class="cart-head">
+    <h3>سلة الطلبات</h3>
+    <button id="cartClose" aria-label="إغلاق السلة">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+      <p>سلتك فارغة</p>
+    </div>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none">
+    <div class="cart-info-fields">
+      <input type="text" id="custName" placeholder="اسمك الكريم">
+      <input type="text" id="custAddr" placeholder="العنوان أو الحي للتوصيل">
+    </div>
+    <div class="cart-total-row">
+      <span>الإجمالي</span>
+      <span id="cartTotal" class="cart-total-price">0 ل.س</span>
+    </div>
+    <button class="btn-checkout" id="checkoutBtn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      تأكيد وإرسال الطلب عبر واتساب
+    </button>
+  </div>
+</aside>
+
+<!-- TOAST WRAP FOR NOTIFICATIONS -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- STICKY BOTTOM ORDER BAR -->
+<div class="sticky-bar" id="stickyBar">
+  <span id="stickyInfo">0 وجبات · 0 ل.س</span>
+  <button class="btn-main sm" id="stickyOpen">مراجعة الطلب 🛒</button>
+</div>
+
+<!-- LIGHTBOX FOR GALLERY IMAGES -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightbox-close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img" src="" alt="صورة مكبرة">
+  <div id="lightbox-caption"></div>
+</div>
+
+<!-- Firebase SDK & Config -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<script src="app.js"></script>
+</body>
+</html>

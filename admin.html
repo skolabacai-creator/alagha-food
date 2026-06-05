@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم · مطعم الآغا</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Core Tokens & Reset ── */
+    :root {
+      --cream:   #F5F0E8;
+      --warm:    #EDE7D9;
+      --charcoal:#1A1814;
+      --ink:     #2C2820;
+      --muted:   #7A7068;
+      --border:  #DDD7CC;
+      --orange:  #D4622A;
+      --orange-l:#E87848;
+      --green:   #25D366;
+      --red:     #e53e3e;
+      --red-l:   #fff0f0;
+      --font: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+      --r-sm: 8px;
+      --r-md: 14px;
+      --r-lg: 24px;
+      --t: 0.22s cubic-bezier(.4,0,.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font-family: inherit; font-size: inherit; }
+    button { cursor: pointer; border: none; background: none; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* ── LOGIN VIEW ── */
+    #login-view {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: linear-gradient(135deg, var(--cream) 0%, var(--warm) 100%);
+    }
+    .login-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 48px 36px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 48px rgba(26,24,20,0.08);
+      text-align: center;
+    }
+    .login-logo {
+      height: 64px;
+      margin: 0 auto 24px auto;
+      object-fit: contain;
+    }
+    .login-card h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 10px;
+    }
+    .login-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .input-group {
+      margin-bottom: 20px;
+      text-align: right;
+    }
+    .input-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      color: var(--charcoal);
+      outline: none;
+      transition: border-color var(--t), background var(--t);
+    }
+    .form-control:focus {
+      border-color: var(--orange);
+      background: #fff;
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--charcoal);
+      color: var(--cream);
+      font-weight: 600;
+      border-radius: var(--r-sm);
+      transition: background var(--t), transform var(--t);
+      margin-top: 10px;
+    }
+    .btn-submit:hover {
+      background: var(--orange);
+      transform: translateY(-1px);
+    }
+    .login-error {
+      color: var(--red);
+      font-size: 0.85rem;
+      margin-top: 14px;
+      display: none;
+      font-weight: 600;
+    }
+
+    /* ── MAIN DASHBOARD VIEW ── */
+    #dashboard-view {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    
+    /* Header */
+    header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-logo {
+      height: 40px;
+      object-fit: contain;
+    }
+    .header-brand h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btn-view-site {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--orange);
+      transition: color var(--t);
+    }
+    .btn-view-site:hover { color: var(--charcoal); }
+    .btn-logout {
+      padding: 8px 16px;
+      background: var(--red-l);
+      color: var(--red);
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: var(--r-sm);
+      transition: background var(--t);
+    }
+    .btn-logout:hover { background: #ffdada; }
+
+    /* Dashboard Layout */
+    .dashboard-container {
+      display: flex;
+      flex: 1;
+    }
+    
+    /* Sidebar Navigation */
+    .sidebar {
+      width: 260px;
+      background: #fff;
+      border-left: 1px solid var(--border);
+      padding: 28px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .tab-btn {
+      width: 100%;
+      text-align: right;
+      padding: 12px 18px;
+      border-radius: var(--r-sm);
+      font-weight: 600;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all var(--t);
+    }
+    .tab-btn:hover {
+      background: var(--cream);
+      color: var(--charcoal);
+    }
+    .tab-btn.active {
+      background: var(--charcoal);
+      color: var(--cream);
+    }
+
+    /* Content Pane */
+    .content-pane {
+      flex: 1;
+      padding: 40px 48px;
+      background: var(--cream);
+      overflow-y: auto;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .pane-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+    .pane-header h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+    .btn-add-item {
+      padding: 10px 20px;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 600;
+      border-radius: var(--r-sm);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background var(--t), transform var(--t);
+    }
+    .btn-add-item:hover {
+      background: var(--charcoal);
+      transform: translateY(-1px);
+    }
+
+    /* Info Alerts */
+    .info-bar {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      border-radius: var(--r-sm);
+      margin-bottom: 24px;
+      font-weight: 500;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .info-bar strong { color: var(--charcoal); }
+
+    /* Tables & Grids */
+    .items-table-wrapper {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(26,24,20,0.02);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+    }
+    th {
+      background: var(--warm);
+      padding: 14px 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    
+    /* Product row styles */
+    .prod-thumb {
+      width: 54px;
+      height: 54px;
+      border-radius: var(--r-sm);
+      object-fit: cover;
+      background: var(--cream);
+      border: 1px solid var(--border);
+    }
+    .prod-name { font-weight: 700; color: var(--charcoal); }
+    .cat-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 12px;
+      background: var(--cream);
+      color: var(--muted);
+    }
+    .cat-badge.cat-shawarma { background: #fdf2e9; color: #b45309; }
+    .cat-badge.cat-broasted { background: #fef2f2; color: #b91c1c; }
+    .cat-badge.cat-grilled { background: #f0fdf4; color: #15803d; }
+    .cat-badge.cat-western  { background: #f5f3ff; color: #6d28d9; }
+    .cat-badge.cat-sides    { background: #ecfeff; color: #0e7490; }
+
+    .actions-cell {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-edit {
+      padding: 6px 12px;
+      background: var(--cream);
+      color: var(--charcoal);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: background var(--t);
+    }
+    .btn-edit:hover { background: var(--border); }
+    .btn-delete {
+      padding: 6px 12px;
+      background: var(--red-l);
+      color: var(--red);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: background var(--t);
+    }
+    .btn-delete:hover { background: #ffdada; }
+
+    /* Media Banners Grid (Hero and Gallery) */
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .media-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 4px 14px rgba(26,24,20,0.02);
+    }
+    .media-img-wrap {
+      height: 160px;
+      background: var(--warm);
+      position: relative;
+    }
+    .media-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .media-info {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+    .media-caption {
+      font-size: 0.88rem;
+      color: var(--charcoal);
+      font-weight: 600;
+      outline: none;
+      border-bottom: 1px dashed transparent;
+      padding: 4px 0;
+      transition: border-color var(--t);
+    }
+    .media-caption:focus {
+      border-color: var(--orange);
+    }
+    .media-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--cream);
+      padding: 12px 16px;
+      background: #fafafa;
+    }
+
+    /* ── MODALS ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(26,24,20,0.5);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      width: 100%;
+      max-width: 540px;
+      box-shadow: 0 24px 54px rgba(26,24,20,0.15);
+      animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+    @keyframes modalIn {
+      from { transform: scale(0.96); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-head {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--cream);
+    }
+    .modal-head h3 { font-size: 1.15rem; font-weight: 700; color: var(--charcoal); }
+    .btn-close-modal {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--warm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 300;
+      transition: background var(--t);
+    }
+    .btn-close-modal:hover { background: var(--border); }
+    .modal-body {
+      padding: 24px;
+      max-height: 75vh;
+      overflow-y: auto;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .modal-foot {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      background: #fafafa;
+    }
+    .btn-cancel {
+      padding: 10px 20px;
+      background: var(--cream);
+      color: var(--charcoal);
+      font-weight: 600;
+      border-radius: var(--r-sm);
+      transition: background var(--t);
+    }
+    .btn-cancel:hover { background: var(--border); }
+    .btn-save {
+      padding: 10px 24px;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 600;
+      border-radius: var(--r-sm);
+      transition: background var(--t);
+    }
+    .btn-save:hover { background: var(--charcoal); }
+
+    /* File upload field styling */
+    .file-input-wrapper {
+      position: relative;
+      margin-bottom: 10px;
+    }
+    .file-input-label {
+      display: block;
+      padding: 12px 16px;
+      background: var(--warm);
+      border: 1px dashed var(--border);
+      border-radius: var(--r-sm);
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--muted);
+      transition: border-color var(--t), background var(--t);
+    }
+    .file-input-label:hover {
+      border-color: var(--orange);
+      background: #fff;
+      color: var(--charcoal);
+    }
+    .file-input-wrapper input {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .img-preview {
+      width: 100px;
+      height: 100px;
+      border-radius: var(--r-sm);
+      border: 1px solid var(--border);
+      object-fit: cover;
+      margin-top: 8px;
+      display: none;
+      background: var(--cream);
+    }
+
+    /* Toast system styles */
+    .admin-toast-wrap {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 90%;
+      max-width: 360px;
+      pointer-events: none;
+    }
+    .admin-toast {
+      background: var(--charcoal);
+      color: var(--cream);
+      padding: 14px 18px;
+      border-radius: var(--r-sm);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      animation: toastIn .3s cubic-bezier(.18,.89,.32,1.28) both;
+    }
+    .admin-toast.error {
+      background: var(--red);
+    }
+    
+    /* Responsive Styling */
+    @media (max-width: 900px) {
+      .dashboard-container { flex-direction: column; }
+      .sidebar { width: 100%; border-left: none; border-bottom: 1px solid var(--border); flex-direction: row; overflow-x: auto; padding: 16px; }
+      .content-pane { padding: 24px 20px; }
+      .tab-btn { white-space: nowrap; padding: 10px 14px; }
+    }
+    @media (max-width: 600px) {
+      header { padding: 16px 20px; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      td, th { padding: 12px 10px; font-size: 0.82rem; }
+      .prod-thumb { width: 40px; height: 40px; }
+    }
+  </style>
+  <!-- Firebase SDK & Config -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+</head>
+<body>
+
+  <!-- ==========================================
+       1. LOGIN VIEW
+       ========================================== -->
+  <div id="login-view">
+    <div class="login-card">
+      <img src="logo.png" alt="شعار مطعم الآغا" class="login-logo" onerror="this.style.display='none'">
+      <h2>لوحة تحكم مطعم الآغا</h2>
+      <p>أدخل رمز المرور السري للدخول إلى الإدارة</p>
+      
+      <form id="login-form">
+        <div class="input-group">
+          <label for="password">رمز المرور السري</label>
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required autofocus>
+        </div>
+        <button type="submit" class="btn-submit">تسجيل الدخول</button>
+      </form>
+      <div id="login-error" class="login-error">رمز المرور غير صحيح! يرجى المحاولة مجدداً.</div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       2. DASHBOARD VIEW
+       ========================================== -->
+  <div id="dashboard-view">
+    <header>
+      <div class="header-brand">
+        <img src="logo.png" alt="شعار الآغا" class="header-logo" onerror="this.style.display='none'">
+        <h1>إدارة مطعم الآغا</h1>
+      </div>
+      <div class="header-actions">
+        <a href="index.html" class="btn-view-site" target="_blank">عرض الموقع الإلكتروني ↗</a>
+        <button id="logoutBtn" class="btn-logout">تسجيل الخروج</button>
+      </div>
+    </header>
+
+    <div class="dashboard-container">
+      <!-- Sidebar Tabs -->
+      <aside class="sidebar">
+        <button class="tab-btn active" data-target="products-tab">🍔 إدارة المنتجات</button>
+        <button class="tab-btn" data-target="hero-tab">✨ صور الهيرو سيكشن</button>
+        <button class="tab-btn" data-target="gallery-tab">📸 صور المعرض</button>
+      </aside>
+
+      <!-- Main Pane -->
+      <main class="content-pane">
+
+        <!-- ───── TAB: PRODUCTS ───── -->
+        <div id="products-tab" class="tab-content active">
+          <div class="pane-header">
+            <h2>قائمة المنتجات والوجبات</h2>
+            <button class="btn-add-item" id="btn-add-product">✚ إضافة وجبة جديدة</button>
+          </div>
+          
+          <div class="items-table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>الصورة</th>
+                  <th>اسم الوجبة</th>
+                  <th>الفئة</th>
+                  <th>السعر (ل.س)</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="products-tbody">
+                <!-- Renders dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ───── TAB: HERO BANNERS ───── -->
+        <div id="hero-tab" class="tab-content">
+          <div class="pane-header">
+            <h2>صور الهيرو سيكشن (الواجهة الرئيسية)</h2>
+          </div>
+          
+          <div class="info-bar" id="hero-count-bar">
+            <span>عدد صور الهيرو الحالي: <strong id="hero-count">0</strong> من أصل <strong>5</strong> صور كحد أقصى.</span>
+          </div>
+
+          <div class="items-table-wrapper" style="padding: 24px; margin-bottom: 32px;" id="hero-add-container">
+            <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 16px;">إضافة صورة هيرو جديدة</h3>
+            <form id="hero-add-form">
+              <div class="input-group">
+                <label>رفع صورة من الجهاز (بالجودة الكاملة):</label>
+                <div class="file-input-wrapper">
+                  <span class="file-input-label" id="hero-file-label">اختر ملف صورة...</span>
+                  <input type="file" id="hero-file" accept="image/*">
+                </div>
+                <img id="hero-img-preview" class="img-preview" alt="معاينة البانر">
+              </div>
+              <div style="text-align: center; margin: 10px 0; color: var(--muted); font-size: 0.85rem;">أو</div>
+              <div class="input-group">
+                <label for="hero-url">عنوان رابط الصورة (URL):</label>
+                <input type="url" id="hero-url" class="form-control" placeholder="https://example.com/image.jpg">
+              </div>
+              <button type="submit" class="btn-save" style="margin-top: 10px;">إضافة للواجهة الرئيسية</button>
+            </form>
+          </div>
+
+          <div class="media-grid" id="hero-banners-grid">
+            <!-- Banners render here -->
+          </div>
+        </div>
+
+        <!-- ───── TAB: GALLERY ───── -->
+        <div id="gallery-tab" class="tab-content">
+          <div class="pane-header">
+            <h2>معرض صور المطعم</h2>
+          </div>
+          
+          <div class="info-bar" id="gallery-count-bar">
+            <span>عدد صور المعرض الحالي: <strong id="gallery-count">0</strong> من أصل <strong>5</strong> صور كحد أقصى.</span>
+          </div>
+
+          <div class="items-table-wrapper" style="padding: 24px; margin-bottom: 32px;" id="gallery-add-container">
+            <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 16px;">إضافة صورة جديدة للمعرض</h3>
+            <form id="gallery-add-form">
+              <div class="input-group">
+                <label>رفع صورة من الجهاز (تُضغط وتصغر تلقائياً):</label>
+                <div class="file-input-wrapper">
+                  <span class="file-input-label" id="gallery-file-label">اختر ملف صورة...</span>
+                  <input type="file" id="gallery-file" accept="image/*">
+                </div>
+                <img id="gallery-img-preview" class="img-preview" alt="معاينة الصورة">
+              </div>
+              <div style="text-align: center; margin: 10px 0; color: var(--muted); font-size: 0.85rem;">أو</div>
+              <div class="input-group">
+                <label for="gallery-url">عنوان رابط الصورة (URL):</label>
+                <input type="url" id="gallery-url" class="form-control" placeholder="https://example.com/image.jpg">
+              </div>
+              <div class="input-group">
+                <label for="gallery-caption">وصف الصورة (يظهر عند التكبير):</label>
+                <input type="text" id="gallery-caption" class="form-control" placeholder="مثال: صالاتنا العائلية المريحة..." required>
+              </div>
+              <button type="submit" class="btn-save" style="margin-top: 10px;">إضافة للمعرض</button>
+            </form>
+          </div>
+
+          <div class="media-grid" id="gallery-photos-grid">
+            <!-- Gallery renders here -->
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       3. MODAL: ADD / EDIT PRODUCT
+       ========================================== -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="modal-title">إضافة وجبة جديدة</h3>
+        <button class="btn-close-modal" onclick="closeProductModal()">&times;</button>
+      </div>
+      <form id="product-form">
+        <input type="hidden" id="prod-id">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="input-group">
+              <label for="prod-name">اسم الوجبة</label>
+              <input type="text" id="prod-name" class="form-control" required placeholder="مثال: سندويش زنجر دبل">
+            </div>
+            <div class="input-group">
+              <label for="prod-cat">الفئة</label>
+              <select id="prod-cat" class="form-control" required>
+                <option value="shawarma">شاورما</option>
+                <option value="broasted">بروستد</option>
+                <option value="grilled">مشويات</option>
+                <option value="western">غربي</option>
+                <option value="sides">إضافات ومشروبات</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="input-group">
+              <label for="prod-price">السعر (ل.س)</label>
+              <input type="number" id="prod-price" class="form-control" required placeholder="مثال: 35000">
+            </div>
+            <div class="input-group">
+              <label>صورة الوجبة (رفع ملف):</label>
+              <div class="file-input-wrapper">
+                <span class="file-input-label" id="prod-file-label">اختر ملف صورة...</span>
+                <input type="file" id="prod-file" accept="image/*">
+              </div>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="prod-url">أو رابط الصورة المباشر (URL):</label>
+            <input type="url" id="prod-url" class="form-control" placeholder="https://example.com/dish.jpg">
+            <img id="prod-img-preview" class="img-preview" alt="معاينة الصورة">
+          </div>
+          <div class="input-group">
+            <label for="prod-desc">الوصف والشرح</label>
+            <textarea id="prod-desc" class="form-control" rows="3" placeholder="مكونات الوجبة وما يقدم معها..." required></textarea>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button type="button" class="btn-cancel" onclick="closeProductModal()">إلغاء</button>
+          <button type="submit" class="btn-save">حفظ المنتج</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-toast-wrap" id="adminToastWrap"></div>
+
+  <!-- ==========================================
+       JS BUSINESS LOGIC
+       ========================================== -->
+  <script>
+    // Constants
+    const ADMIN_PASSWORD = 'alagha2026';
+    const CAT_LABELS = {
+      shawarma: 'شاورما',
+      broasted: 'بروستد',
+      grilled: 'مشويات',
+      western: 'غربي',
+      sides: 'إضافات ومشروبات'
+    };
+
+    // Global State
+    let products = [];
+    let heroImages = [];
+    let galleryImages = [];
+
+    // Auth verification
+    document.addEventListener('DOMContentLoaded', () => {
+      const isAuth = sessionStorage.getItem('alagha_admin_auth') === 'true';
+      if (isAuth) {
+        showDashboard();
+      } else {
+        showLogin();
+      }
+      setupAuthHandlers();
+      setupTabs();
+      setupImageUploadPreviews();
+      setupForms();
+    });
+
+    function showLogin() {
+      document.getElementById('login-view').style.display = 'flex';
+      document.getElementById('dashboard-view').style.display = 'none';
+    }
+
+    function showDashboard() {
+      document.getElementById('login-view').style.display = 'none';
+      document.getElementById('dashboard-view').style.display = 'flex';
+      loadData();
+      renderAll();
+      syncAdminData();
+    }
+
+    function setupAuthHandlers() {
+      const loginForm = document.getElementById('login-form');
+      const loginError = document.getElementById('login-error');
+      
+      loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const pass = document.getElementById('password').value;
+        if (pass === ADMIN_PASSWORD) {
+          sessionStorage.setItem('alagha_admin_auth', 'true');
+          loginError.style.display = 'none';
+          showDashboard();
+          showToast('تم تسجيل الدخول بنجاح! 🔑');
+        } else {
+          loginError.style.display = 'block';
+          document.getElementById('password').value = '';
+        }
+      });
+
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        sessionStorage.removeItem('alagha_admin_auth');
+        showLogin();
+      });
+    }
+
+    // Tabs logic
+    function setupTabs() {
+      const btns = document.querySelectorAll('.tab-btn');
+      const contents = document.querySelectorAll('.tab-content');
+      
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btns.forEach(b => b.classList.remove('active'));
+          contents.forEach(c => c.classList.remove('active'));
+          
+          btn.classList.add('active');
+          const target = btn.dataset.target;
+          document.getElementById(target).classList.add('active');
+        });
+      });
+    }
+
+    // Data handling
+    function loadData() {
+      // Load products
+      try {
+        products = JSON.parse(localStorage.getItem('alagha_menu_items')) || [];
+      } catch (e) { products = []; }
+
+      // Load hero images (updated default paths to existing files)
+      try {
+        heroImages = JSON.parse(localStorage.getItem('alagha_hero_images')) || [
+          'image/restaurant_3.jpg',
+          'image/restaurant_6.jpg',
+          'image/restaurant_7.jpg'
+        ];
+      } catch (e) { heroImages = []; }
+
+      // Load gallery images (updated default paths to existing files)
+      try {
+        galleryImages = JSON.parse(localStorage.getItem('alagha_gallery_images')) || [
+          { src: 'image/restaurant_1.jpg', caption: 'جلساتنا وصالاتنا العائلية الفاخرة' },
+          { src: 'image/restaurant_2.jpg', caption: 'أجواء ممتازة وخدمة راقية للزبائن' },
+          { src: 'image/restaurant_3.jpg', caption: 'سيخ الشاورما البلدي من الآغا' },
+          { src: 'image/restaurant_6.jpg', caption: 'وجبات غربية وسندويشات بنكهات ممتازة' },
+          { src: 'image/restaurant_7.jpg', caption: 'مشويات الآغا الفاخرة على الفحم' }
+        ];
+      } catch (e) { galleryImages = []; }
+    }
+
+    function saveData(key, data) {
+      try {
+        localStorage.setItem(key, JSON.stringify(data));
+      } catch (e) {
+        showToast('فشل حفظ البيانات محلياً!', true);
+      }
+
+      // مزامنة البيانات سحابياً في الخلفية مع Firebase Firestore
+      if (typeof db !== 'undefined') {
+        let docId = '';
+        let payload = {};
+
+        if (key === 'alagha_menu_items') {
+          docId = 'menu';
+          payload = { items: data };
+        } else if (key === 'alagha_hero_images') {
+          docId = 'hero';
+          payload = { images: data };
+        } else if (key === 'alagha_gallery_images') {
+          docId = 'gallery';
+          payload = { images: data };
+        }
+
+        if (docId) {
+          db.collection('alagha_store').doc(docId).set(payload)
+            .then(() => {
+              showToast('تمت المزامنة السحابية بنجاح! ☁️');
+            })
+            .catch(err => {
+              console.error("Firebase Sync Error:", err);
+              showToast('فشل المزامنة السحابية: ' + err.message, true);
+            });
+        }
+      }
+    }
+
+    // جلب البيانات السحابية عند تحميل الصفحة
+    async function syncAdminData() {
+      if (typeof db === 'undefined') return;
+      try {
+        const menuDoc = await db.collection('alagha_store').doc('menu').get();
+        if (menuDoc.exists) {
+          const remoteMenu = menuDoc.data().items;
+          if (remoteMenu && Array.isArray(remoteMenu)) {
+            products = remoteMenu;
+            localStorage.setItem('alagha_menu_items', JSON.stringify(remoteMenu));
+          }
+        }
+
+        const heroDoc = await db.collection('alagha_store').doc('hero').get();
+        if (heroDoc.exists) {
+          const remoteHero = heroDoc.data().images;
+          if (remoteHero && Array.isArray(remoteHero)) {
+            heroImages = remoteHero;
+            localStorage.setItem('alagha_hero_images', JSON.stringify(remoteHero));
+          }
+        }
+
+        const galleryDoc = await db.collection('alagha_store').doc('gallery').get();
+        if (galleryDoc.exists) {
+          const remoteGallery = galleryDoc.data().images;
+          if (remoteGallery && Array.isArray(remoteGallery)) {
+            galleryImages = remoteGallery;
+            localStorage.setItem('alagha_gallery_images', JSON.stringify(remoteGallery));
+          }
+        }
+
+        renderAll();
+        showToast('تم تحميل أحدث البيانات من السحابة ☁️');
+      } catch (err) {
+        console.warn("Firestore sync failed on admin side:", err);
+      }
+    }
+
+    // Render logic
+    function renderAll() {
+      renderProducts();
+      renderHero();
+      renderGallery();
+    }
+
+    function renderProducts() {
+      const tbody = document.getElementById('products-tbody');
+      if (!tbody) return;
+
+      if (products.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--muted); padding: 32px;">لا يوجد وجبات حالياً. اضغط على "إضافة وجبة" للبدء.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = products.map((item, idx) => `
+        <tr>
+          <td>
+            <img src="${item.img}" class="prod-thumb" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=120&q=50'">
+          </td>
+          <td>
+            <div class="prod-name">${item.name}</div>
+            <div style="font-size: 0.8rem; color: var(--muted); max-width: 280px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${item.desc}</div>
+          </td>
+          <td>
+            <span class="cat-badge cat-${item.cat}">${CAT_LABELS[item.cat] || item.cat}</span>
+          </td>
+          <td style="font-weight: 700; color: var(--charcoal);">${item.price.toLocaleString('en-US')} ل.س</td>
+          <td>
+            <div class="actions-cell">
+              <button class="btn-edit" onclick="openEditProduct('${item.id}')">تعديل</button>
+              <button class="btn-delete" onclick="deleteProduct('${item.id}')">حذف</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderHero() {
+      const grid = document.getElementById('hero-banners-grid');
+      const countEl = document.getElementById('hero-count');
+      const formContainer = document.getElementById('hero-add-container');
+      if (!grid) return;
+
+      countEl.textContent = heroImages.length;
+
+      // Handle visibility of add form based on count limit (Max 5)
+      if (heroImages.length >= 5) {
+        formContainer.style.display = 'none';
+      } else {
+        formContainer.style.display = 'block';
+      }
+
+      if (heroImages.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--muted); padding: 24px;">لا توجد صور في الهيرو سيكشن.</div>`;
+        return;
+      }
+
+      grid.innerHTML = heroImages.map((src, idx) => `
+        <div class="media-card">
+          <div class="media-img-wrap">
+            <img src="${src}" alt="صورة هيرو ${idx+1}">
+          </div>
+          <div class="media-info">
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--muted);">الصورة #${idx+1}</div>
+          </div>
+          <div class="media-actions">
+            <span>بانر رئيسي</span>
+            <button class="btn-delete" style="padding: 4px 10px;" onclick="deleteHeroImage(${idx})">حذف البانر</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderGallery() {
+      const grid = document.getElementById('gallery-photos-grid');
+      const countEl = document.getElementById('gallery-count');
+      const formContainer = document.getElementById('gallery-add-container');
+      if (!grid) return;
+
+      countEl.textContent = galleryImages.length;
+
+      // Limit gallery images to Max 5
+      if (galleryImages.length >= 5) {
+        formContainer.style.display = 'none';
+      } else {
+        formContainer.style.display = 'block';
+      }
+
+      if (galleryImages.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--muted); padding: 24px;">لا توجد صور في معرض الصور.</div>`;
+        return;
+      }
+
+      grid.innerHTML = galleryImages.map((item, idx) => `
+        <div class="media-card">
+          <div class="media-img-wrap">
+            <img src="${item.src}" alt="${item.caption}">
+          </div>
+          <div class="media-info">
+            <input type="text" class="media-caption" value="${item.caption}" onchange="updateGalleryCaption(${idx}, this.value)" title="اضغط لتعديل النص">
+          </div>
+          <div class="media-actions">
+            <span style="font-size: 0.8rem; color: var(--muted);">اضغط لتعديل النص ✍️</span>
+            <button class="btn-delete" style="padding: 4px 10px;" onclick="deleteGalleryImage(${idx})">حذف الصورة</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Modal Control
+    const productModal = document.getElementById('product-modal');
+    
+    document.getElementById('btn-add-product').addEventListener('click', () => {
+      document.getElementById('modal-title').textContent = 'إضافة وجبة جديدة';
+      document.getElementById('product-form').reset();
+      document.getElementById('prod-id').value = '';
+      document.getElementById('prod-img-preview').style.display = 'none';
+      document.getElementById('prod-file-label').textContent = 'اختر ملف صورة...';
+      productModal.style.display = 'flex';
+    });
+
+    function closeProductModal() {
+      productModal.style.display = 'none';
+    }
+
+    function openEditProduct(id) {
+      const item = products.find(p => p.id === id);
+      if (!item) return;
+
+      document.getElementById('modal-title').textContent = 'تعديل وجبة';
+      document.getElementById('prod-id').value = item.id;
+      document.getElementById('prod-name').value = item.name;
+      document.getElementById('prod-cat').value = item.cat;
+      document.getElementById('prod-price').value = item.price;
+      document.getElementById('prod-url').value = item.img.startsWith('data:') ? '' : item.img;
+      document.getElementById('prod-desc').value = item.desc;
+      
+      const preview = document.getElementById('prod-img-preview');
+      preview.src = item.img;
+      preview.style.display = 'block';
+      document.getElementById('prod-file-label').textContent = 'تغيير الصورة المرفوعة...';
+
+      productModal.style.display = 'flex';
+    }
+
+    // Dynamic Preview & Canvas Compression Setup
+    let compressedProductImage = null;
+    let compressedHeroImage = null;
+    let compressedGalleryImage = null;
+
+    function setupImageUploadPreviews() {
+      // Product image file upload preview
+      const prodFile = document.getElementById('prod-file');
+      prodFile.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        document.getElementById('prod-file-label').textContent = file.name;
+        
+        // Show indicator toast
+        showToast('جاري معالجة وضغط الصورة... ⏳');
+        
+        compressImage(file, 800, 600, 0.7, (dataUrl) => {
+          compressedProductImage = dataUrl;
+          const preview = document.getElementById('prod-img-preview');
+          preview.src = dataUrl;
+          preview.style.display = 'block';
+          showToast('تم ضغط الصورة وتجهيزها! ✅');
+        });
+      });
+
+      // Clear file upload if url changes
+      document.getElementById('prod-url').addEventListener('input', (e) => {
+        if (e.target.value.trim() !== '') {
+          prodFile.value = '';
+          compressedProductImage = null;
+          document.getElementById('prod-file-label').textContent = 'اختر ملف صورة...';
+          const preview = document.getElementById('prod-img-preview');
+          preview.src = e.target.value.trim();
+          preview.style.display = 'block';
+        }
+      });
+
+      // Hero banner upload (Direct high-resolution load without compression)
+      const heroFile = document.getElementById('hero-file');
+      heroFile.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        document.getElementById('hero-file-label').textContent = file.name;
+        showToast('جاري تحميل البانر بالجودة الأصلية... ⏳');
+
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          compressedHeroImage = evt.target.result;
+          const preview = document.getElementById('hero-img-preview');
+          preview.src = evt.target.result;
+          preview.style.display = 'block';
+          showToast('تم تحميل البانر بالجودة الكاملة! ✅');
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // Gallery upload
+      const galleryFile = document.getElementById('gallery-file');
+      galleryFile.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        document.getElementById('gallery-file-label').textContent = file.name;
+        showToast('جاري معالجة الصورة... ⏳');
+
+        compressImage(file, 800, 800, 0.7, (dataUrl) => {
+          compressedGalleryImage = dataUrl;
+          const preview = document.getElementById('gallery-img-preview');
+          preview.src = dataUrl;
+          preview.style.display = 'block';
+          showToast('تم تجهيز الصورة بنجاح! ✅');
+        });
+      });
+    }
+
+    // Canvas Compression function
+    function compressImage(file, maxW, maxH, quality, callback) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          let w = img.width;
+          let h = img.height;
+          
+          if (w > maxW || h > maxH) {
+            if (w > h) {
+              h = Math.round((h * maxW) / w);
+              w = maxW;
+            } else {
+              w = Math.round((w * maxH) / h);
+              h = maxH;
+            }
+          }
+          
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          
+          const dataUrl = canvas.toDataURL('image/jpeg', quality);
+          callback(dataUrl);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Form Submissions Setup
+    function setupForms() {
+      // Product Form Add/Edit
+      const prodForm = document.getElementById('product-form');
+      prodForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const id = document.getElementById('prod-id').value;
+        const name = document.getElementById('prod-name').value.trim();
+        const cat = document.getElementById('prod-cat').value;
+        const price = parseInt(document.getElementById('prod-price').value, 10);
+        const url = document.getElementById('prod-url').value.trim();
+        const desc = document.getElementById('prod-desc').value.trim();
+        
+        let img = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80';
+        if (compressedProductImage) {
+          img = compressedProductImage;
+        } else if (url) {
+          img = url;
+        } else if (id) {
+          // Keep old image
+          const item = products.find(p => p.id === id);
+          if (item) img = item.img;
+        }
+
+        if (id) {
+          // Edit
+          const idx = products.findIndex(p => p.id === id);
+          if (idx !== -1) {
+            products[idx] = { id, cat, name, desc, price, img };
+            showToast('تم تحديث الوجبة بنجاح! 💾');
+          }
+        } else {
+          // Add new
+          const newId = 'prod-' + Date.now();
+          products.push({ id: newId, cat, name, desc, price, img });
+          showToast('تمت إضافة الوجبة الجديدة بنجاح! 🎉');
+        }
+
+        saveData('alagha_menu_items', products);
+        renderProducts();
+        closeProductModal();
+        
+        // Reset compression states
+        compressedProductImage = null;
+      });
+
+      // Hero Form Add
+      const heroForm = document.getElementById('hero-add-form');
+      heroForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        if (heroImages.length >= 5) {
+          showToast('لا يمكن إضافة أكثر من 5 صور في الهيرو سيكشن!', true);
+          return;
+        }
+
+        const url = document.getElementById('hero-url').value.trim();
+        let img = '';
+
+        if (compressedHeroImage) {
+          img = compressedHeroImage;
+        } else if (url) {
+          img = url;
+        } else {
+          showToast('يرجى رفع ملف صورة أو لصق رابط صورة أولاً!', true);
+          return;
+        }
+
+        heroImages.push(img);
+        saveData('alagha_hero_images', heroImages);
+        renderHero();
+        
+        // Reset
+        heroForm.reset();
+        compressedHeroImage = null;
+        document.getElementById('hero-img-preview').style.display = 'none';
+        document.getElementById('hero-file-label').textContent = 'اختر ملف صورة...';
+        showToast('تمت إضافة صورة الهيرو بنجاح! 🖼️');
+      });
+
+      // Gallery Form Add
+      const galleryForm = document.getElementById('gallery-add-form');
+      galleryForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        if (galleryImages.length >= 5) {
+          showToast('لا يمكن إضافة أكثر من 5 صور في المعرض!', true);
+          return;
+        }
+
+        const url = document.getElementById('gallery-url').value.trim();
+        const caption = document.getElementById('gallery-caption').value.trim();
+        let img = '';
+
+        if (compressedGalleryImage) {
+          img = compressedGalleryImage;
+        } else if (url) {
+          img = url;
+        } else {
+          showToast('يرجى رفع ملف صورة أو لصق رابط صورة للمعرض!', true);
+          return;
+        }
+
+        galleryImages.push({ src: img, caption: caption });
+        saveData('alagha_gallery_images', galleryImages);
+        renderGallery();
+
+        // Reset
+        galleryForm.reset();
+        compressedGalleryImage = null;
+        document.getElementById('gallery-img-preview').style.display = 'none';
+        document.getElementById('gallery-file-label').textContent = 'اختر ملف صورة...';
+        showToast('تمت إضافة الصورة لمعرض الصور! 📸');
+      });
+    }
+
+    // Delete handlers
+    window.deleteProduct = function(id) {
+      if (confirm('هل أنت متأكد من حذف هذه الوجبة نهائياً؟')) {
+        products = products.filter(p => p.id !== id);
+        saveData('alagha_menu_items', products);
+        renderProducts();
+        showToast('تم حذف الوجبة.');
+      }
+    };
+
+    window.deleteHeroImage = function(index) {
+      if (confirm('هل أنت متأكد من إزالة هذا البانر الرئيسي؟')) {
+        heroImages.splice(index, 1);
+        saveData('alagha_hero_images', heroImages);
+        renderHero();
+        showToast('تمت إزالة صورة الهيرو.');
+      }
+    };
+
+    window.deleteGalleryImage = function(index) {
+      if (confirm('هل أنت متأكد من إزالة هذه الصورة من المعرض؟')) {
+        galleryImages.splice(index, 1);
+        saveData('alagha_gallery_images', galleryImages);
+        renderGallery();
+        showToast('تمت إزالة الصورة من المعرض.');
+      }
+    };
+
+    window.updateGalleryCaption = function(index, newCaption) {
+      if (index >= 0 && index < galleryImages.length) {
+        galleryImages[index].caption = newCaption.trim();
+        saveData('alagha_gallery_images', galleryImages);
+        showToast('تم حفظ التسمية التوضيحية الجديدة! ✍️');
+      }
+    };
+
+    // Admin Toasts
+    function showToast(msg, isError = false) {
+      const wrap = document.getElementById('adminToastWrap');
+      if (!wrap) return;
+
+      const t = document.createElement('div');
+      t.className = 'admin-toast' + (isError ? ' error' : '');
+      t.innerHTML = `<span>${msg}</span>`;
+      wrap.appendChild(t);
+      
+      setTimeout(() => {
+        t.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        t.style.opacity = '0';
+        t.style.transform = 'translateY(-10px)';
+        t.addEventListener('transitionend', () => t.remove());
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
