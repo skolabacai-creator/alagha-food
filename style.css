@@ -479,7 +479,7 @@ nav.scrolled .nav-brand .logo-img {
 }
 .food-img {
   position: relative;
-  height: 200px;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   background: var(--warm);
 }
