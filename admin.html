@@ -707,10 +707,6 @@
                 <label for="gallery-url">عنوان رابط الصورة (URL):</label>
                 <input type="url" id="gallery-url" class="form-control" placeholder="https://example.com/image.jpg">
               </div>
-              <div class="input-group">
-                <label for="gallery-caption">وصف الصورة (يظهر عند التكبير):</label>
-                <input type="text" id="gallery-caption" class="form-control" placeholder="مثال: صالاتنا العائلية المريحة..." required>
-              </div>
               <button type="submit" class="btn-save" style="margin-top: 10px;">إضافة للمعرض</button>
             </form>
           </div>
@@ -1093,13 +1089,10 @@
       grid.innerHTML = galleryImages.map((item, idx) => `
         <div class="media-card">
           <div class="media-img-wrap">
-            <img src="${item.src}" alt="${item.caption}">
-          </div>
-          <div class="media-info">
-            <input type="text" class="media-caption" value="${item.caption}" onchange="updateGalleryCaption(${idx}, this.value)" title="اضغط لتعديل النص">
+            <img src="${item.src}" alt="صورة المعرض ${idx+1}">
           </div>
           <div class="media-actions">
-            <span style="font-size: 0.8rem; color: var(--muted);">اضغط لتعديل النص ✍️</span>
+            <span>صورة المعرض</span>
             <button class="btn-delete" style="padding: 4px 10px;" onclick="deleteGalleryImage(${idx})">حذف الصورة</button>
           </div>
         </div>
@@ -1344,7 +1337,7 @@
         }
 
         const url = document.getElementById('gallery-url').value.trim();
-        const caption = document.getElementById('gallery-caption').value.trim();
+        const caption = '';
         let img = '';
 
         if (compressedGalleryImage) {
@@ -1394,14 +1387,6 @@
         saveData('alagha_gallery_images', galleryImages);
         renderGallery();
         showToast('تمت إزالة الصورة من المعرض.');
-      }
-    };
-
-    window.updateGalleryCaption = function(index, newCaption) {
-      if (index >= 0 && index < galleryImages.length) {
-        galleryImages[index].caption = newCaption.trim();
-        saveData('alagha_gallery_images', galleryImages);
-        showToast('تم حفظ التسمية التوضيحية الجديدة! ✍️');
       }
     };
 

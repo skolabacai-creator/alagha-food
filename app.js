@@ -573,10 +573,7 @@ function renderGallery() {
 
   grid.innerHTML = galleryImages.map(item => `
     <div class="gallery-item">
-      <img src="${item.src}" alt="${item.caption}" loading="lazy">
-      <div class="gallery-overlay">
-        <span>${item.caption}</span>
-      </div>
+      <img src="${item.src}" alt="صورة من المعرض" loading="lazy">
     </div>
   `).join('');
 }
@@ -591,15 +588,14 @@ function initGalleryLightbox() {
 
   renderGallery();
 
-  // Open Lightbox
+  // Open Lightbox (without captions)
   const bindLightboxItem = (item) => {
     item.addEventListener('click', () => {
       const img = item.querySelector('img');
-      const caption = item.querySelector('.gallery-overlay span');
       
       lightbox.style.display = 'block';
       lightboxImg.src = img.src;
-      lightboxCaption.innerHTML = caption ? caption.innerText : img.alt;
+      lightboxCaption.innerHTML = ""; // إخفاء النص
       document.body.style.overflow = 'hidden'; // block page scroll
     });
   };
