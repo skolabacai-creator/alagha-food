@@ -904,6 +904,15 @@ nav.scrolled .nav-brand .logo-img {
 }
 .footer-brand p { font-size: 0.85rem; }
 .footer-copy { font-size: 0.82rem; }
+.footer-copy a {
+  color: var(--orange-l);
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color var(--t);
+}
+.footer-copy a:hover {
+  color: #fff;
+}
 
 /* ── CART SIDEBAR ── */
 .cart-overlay {
