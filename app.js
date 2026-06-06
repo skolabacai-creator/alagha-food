@@ -191,7 +191,7 @@ const CAT_LABELS = {
 };
 
 // WhatsApp Target Phone Number config (Placeholder for demo)
-const WA = '963900000000'; // استبدل هذا الرقم برقم المطعم الفعلي عند تسليم الموقع
+let WA = '963900000000'; // استبدل هذا الرقم برقم المطعم الفعلي عند تسليم الموقع
 
 let cart = [];
 let currentCat = 'all';
@@ -202,6 +202,15 @@ document.addEventListener('DOMContentLoaded', () => {
     cart = JSON.parse(localStorage.getItem('agha_cart')) || []; 
   } catch(e) { 
     cart = []; 
+  }
+
+  // تحميل الإعدادات المحلية لأرقام التواصل إن وجدت
+  const cachedContact = localStorage.getItem('alagha_contact_settings');
+  if (cachedContact) {
+    try {
+      const contact = JSON.parse(cachedContact);
+      applyContactSettings(contact);
+    } catch(e) {}
   }
   
   initHeroCarousel();
@@ -661,7 +670,55 @@ async function syncWithFirestore() {
         renderGallery();
       }
     }
+
+    // 4. مزامنة أرقام التواصل
+    const contactDoc = await db.collection('alagha_store').doc('contacts').get();
+    if (contactDoc.exists) {
+      const remoteContact = contactDoc.data();
+      if (remoteContact && remoteContact.phone && remoteContact.whatsapp) {
+        localStorage.setItem('alagha_contact_settings', JSON.stringify(remoteContact));
+        applyContactSettings(remoteContact);
+      }
+    }
   } catch (error) {
     console.warn("Firebase sync failed, running in offline mode:", error);
+  }
+}
+
+// تطبق إعدادات أرقام التواصل في الصفحة الرئيسية
+function applyContactSettings(contact) {
+  if (!contact) return;
+  
+  if (contact.whatsapp) {
+    // إزالة رمز + وأية مسافات زائدة من أجل رابط الواتساب البرمجي
+    const cleanWA = contact.whatsapp.replace('+', '').trim();
+    WA = cleanWA;
+    
+    // تحديث رابط الواتساب في زر الهيرو
+    const heroWABtn = document.getElementById('hero-wa-btn');
+    if (heroWABtn) {
+      heroWABtn.href = `https://wa.me/${cleanWA}`;
+    }
+    
+    // تحديث رابط الواتساب في قسم تواصل معنا
+    const contactWALink = document.getElementById('contact-wa-link');
+    if (contactWALink) {
+      contactWALink.href = `https://wa.me/${cleanWA}`;
+    }
+    
+    // تحديث رابط الواتساب في أيقونة التواصل الاجتماعي بالفوتير
+    const socialWALink = document.getElementById('social-wa-link');
+    if (socialWALink) {
+      socialWALink.href = `https://wa.me/${cleanWA}`;
+    }
+  }
+  
+  if (contact.phone) {
+    // تحديث هاتف المكالمات في قسم تواصل معنا
+    const contactPhoneLink = document.getElementById('contact-phone-link');
+    if (contactPhoneLink) {
+      contactPhoneLink.href = `tel:${contact.phone}`;
+      contactPhoneLink.textContent = contact.phone;
+    }
   }
 }

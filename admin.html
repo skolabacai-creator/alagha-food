@@ -618,6 +618,7 @@
         <button class="tab-btn active" data-target="products-tab">🍔 إدارة المنتجات</button>
         <button class="tab-btn" data-target="hero-tab">✨ صور الهيرو سيكشن</button>
         <button class="tab-btn" data-target="gallery-tab">📸 صور المعرض</button>
+        <button class="tab-btn" data-target="settings-tab">⚙️ إعدادات التواصل</button>
       </aside>
 
       <!-- Main Pane -->
@@ -718,6 +719,30 @@
           </div>
         </div>
 
+        <!-- ───── TAB: SETTINGS ───── -->
+        <div id="settings-tab" class="tab-content">
+          <div class="pane-header">
+            <h2>إعدادات أرقام التواصل والطلب</h2>
+          </div>
+
+          <div class="items-table-wrapper" style="padding: 24px; margin-bottom: 32px; max-width: 600px;">
+            <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 16px;">تعديل أرقام الهاتف والواتساب للمطعم</h3>
+            <form id="settings-form">
+              <div class="input-group" style="margin-bottom: 16px;">
+                <label for="contact-phone" style="display: block; margin-bottom: 6px; font-weight: 500;">رقم الاتصال المباشر (يبدأ بـ 09):</label>
+                <input type="text" id="contact-phone" class="form-control" placeholder="مثال: 0935122304" required pattern="^09\d{8}$" title="رقم الهاتف يجب أن يبدأ بـ 09 ويتكون من 10 أرقام">
+                <small style="color: var(--muted); display: block; margin-top: 4px;">الرقم الذي يتصل به الزبائن هاتفياً للطلب المباشر.</small>
+              </div>
+              <div class="input-group" style="margin-bottom: 24px;">
+                <label for="contact-whatsapp" style="display: block; margin-bottom: 6px; font-weight: 500;">رقم الواتساب للطلبات (يبدأ بـ 963+):</label>
+                <input type="text" id="contact-whatsapp" class="form-control" placeholder="مثال: +963935122304" required pattern="^\+9639\d{8}$" title="رقم الواتساب يجب أن يبدأ بـ +963 متبوعاً برقم الجوال">
+                <small style="color: var(--muted); display: block; margin-top: 4px;">الرقم الدولي المستخدم لإرسال الطلبات إليه عبر محادثة واتساب.</small>
+              </div>
+              <button type="submit" class="btn-save">حفظ الإعدادات 💾</button>
+            </form>
+          </div>
+        </div>
+
       </main>
     </div>
   </div>
@@ -801,6 +826,7 @@
     let products = [];
     let heroImages = [];
     let galleryImages = [];
+    let contactSettings = { phone: '0900000000', whatsapp: '+963900000000' };
 
     // Auth verification
     document.addEventListener('DOMContentLoaded', () => {
@@ -917,6 +943,18 @@
           galleryImages = [];
         }
       }
+
+      // Load contact settings
+      const cachedContact = localStorage.getItem('alagha_contact_settings');
+      if (cachedContact === null) {
+        contactSettings = { phone: '0900000000', whatsapp: '+963900000000' };
+      } else {
+        try {
+          contactSettings = JSON.parse(cachedContact) || { phone: '0900000000', whatsapp: '+963900000000' };
+        } catch (e) {
+          contactSettings = { phone: '0900000000', whatsapp: '+963900000000' };
+        }
+      }
     }
 
     function saveData(key, data) {
@@ -940,6 +978,9 @@
         } else if (key === 'alagha_gallery_images') {
           docId = 'gallery';
           payload = { images: data };
+        } else if (key === 'alagha_contact_settings') {
+          docId = 'contacts';
+          payload = data;
         }
 
         if (docId) {
@@ -986,6 +1027,15 @@
           }
         }
 
+        const contactDoc = await db.collection('alagha_store').doc('contacts').get();
+        if (contactDoc.exists) {
+          const remoteContact = contactDoc.data();
+          if (remoteContact && remoteContact.phone && remoteContact.whatsapp) {
+            contactSettings = remoteContact;
+            localStorage.setItem('alagha_contact_settings', JSON.stringify(remoteContact));
+          }
+        }
+
         renderAll();
         showToast('تم تحميل أحدث البيانات من السحابة ☁️');
       } catch (err) {
@@ -998,6 +1048,16 @@
       renderProducts();
       renderHero();
       renderGallery();
+      renderSettings();
+    }
+
+    function renderSettings() {
+      const phoneInput = document.getElementById('contact-phone');
+      const whatsappInput = document.getElementById('contact-whatsapp');
+      if (phoneInput && whatsappInput) {
+        phoneInput.value = contactSettings.phone || '0900000000';
+        whatsappInput.value = contactSettings.whatsapp || '+963900000000';
+      }
     }
 
     function renderProducts() {
@@ -1362,6 +1422,28 @@
         document.getElementById('gallery-file-label').textContent = 'اختر ملف صورة...';
         showToast('تمت إضافة الصورة لمعرض الصور! 📸');
       });
+
+      // Settings Form Submit
+      const settingsForm = document.getElementById('settings-form');
+      if (settingsForm) {
+        settingsForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const phone = document.getElementById('contact-phone').value.trim();
+          const whatsapp = document.getElementById('contact-whatsapp').value.trim();
+          
+          if (!phone.startsWith('09')) {
+            showToast('رقم الهاتف يجب أن يبدأ بـ 09', true);
+            return;
+          }
+          if (!whatsapp.startsWith('+963')) {
+            showToast('رقم الواتساب يجب أن يبدأ بـ +963', true);
+            return;
+          }
+          
+          contactSettings = { phone, whatsapp };
+          saveData('alagha_contact_settings', contactSettings);
+        });
+      }
     }
 
     // Delete handlers
