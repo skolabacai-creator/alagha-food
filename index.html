@@ -7,7 +7,9 @@
   <title>الآغا · فروج وبروستد | منبج</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://firestore.googleapis.com">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +17,7 @@
 <!-- STICKY NAVIGATION -->
 <nav id="nav">
   <a href="#" class="nav-brand">
-    <img src="logo.png" alt="شعار مطعم الآغا" class="logo-img" width="132" height="142">
+    <img src="logo.png" alt="شعار مطعم الآغا" class="logo-img" width="132" height="142" fetchpriority="high">
   </a>
   <div class="nav-links">
     <a href="#" class="nav-link active">الرئيسية</a>
@@ -48,7 +50,7 @@
 <section class="hero">
   <div class="hero-bg">
     <div class="hero-img-wrap">
-      <img src="image/restaurant_3.jpg" alt="شاورما مطعم الآغا" id="heroImg" width="1456" height="2048">
+      <img src="image/restaurant_3.jpg" alt="شاورما مطعم الآغا" id="heroImg" width="1456" height="2048" fetchpriority="high">
     </div>
     <div class="hero-overlay"></div>
   </div>
