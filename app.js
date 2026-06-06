@@ -11,7 +11,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'سندويش شاورما سوبر',
     desc: 'شاورما دجاج متبلة محشوة في خبز الصاج مع كريم الثوم والمخلل اللذيذ.',
     price: 28000,
-    img: 'https://images.unsplash.com/photo-1642683215881-c111c13d7065?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1642683215881-c111c13d7065?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'sh-2',
@@ -19,7 +19,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'سندويش شاورما دبل',
     desc: 'شاورما دجاج بكمية مضاعفة مع كريم الثوم ومخلل وبطاطا مقمرة.',
     price: 35000,
-    img: 'https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'sh-3',
@@ -27,7 +27,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'وجبة شاورما عربي فرط',
     desc: 'شاورما دجاج مفرودة مع بطاطا مقلية وكريم ثوم ومخلل وخبز صاج.',
     price: 48000,
-    img: 'https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'sh-4',
@@ -35,7 +35,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'وجبة شاورما عربي دبل',
     desc: 'قطعتان كبيرتان من خبز الصاج المحشو بالشاورما المقطعة، تقدم مع بطاطا وكريم ثوم ومخلل.',
     price: 75000,
-    img: 'https://images.unsplash.com/photo-1642683215881-c111c13d7065?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1642683215881-c111c13d7065?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'sh-5',
@@ -43,7 +43,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'ماريا دجاج بالجبنة',
     desc: 'خبز صاج محشو بشاورما دجاج وجبنة القشقوان الغنية، مشوية على الفحم.',
     price: 42000,
-    img: 'https://images.unsplash.com/photo-1606728035253-49e196302c43?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1606728035253-49e196302c43?auto=format&fit=crop&w=400&q=60'
   },
 
   // --- BROASTED CATEGORY ---
@@ -53,7 +53,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'وجبة فروج بروستد كامل',
     desc: 'فروج كامل (4 قطع) بروستد مقرمش بتتبيلة الآغا السرية مع بطاطا، كريم ثوم ومخلل وخبز.',
     price: 140000,
-    img: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'br-2',
@@ -61,7 +61,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'وجبة نصف فروج بروستد',
     desc: 'نصف فروج (قطعتان) بروستد ذهبي مقرمش مع بطاطا مقلية وكريم ثوم ومخلل وخبز.',
     price: 75000,
-    img: 'https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'br-3',
@@ -69,7 +69,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'وجبة بروستد حار إكسترا',
     desc: 'فروج كامل بروستد بتتبيلة حارة جداً ومقرمشة مع بطاطا ومخلل وكريم ثوم حار.',
     price: 145000,
-    img: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=400&q=60'
   },
 
   // --- GRILLED CATEGORY ---
@@ -79,7 +79,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'فروج مشوي على الفحم كامل',
     desc: 'فروج كامل مشوي ببطء على الفحم بتتبيلة بهارات الآغا مع كريم ثوم وبطاطا ومخلل.',
     price: 130000,
-    img: 'https://images.unsplash.com/photo-1598515214211-89d3e73ae83b?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1598515214211-89d3e73ae83b?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'gr-2',
@@ -87,7 +87,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'فروج مسحب مشوي',
     desc: 'فروج كامل مسحب من العظم مشوي على الفحم على الطريقة التركية بصوص حار خفيف.',
     price: 135000,
-    img: 'https://images.unsplash.com/photo-1606728035253-49e196302c43?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1606728035253-49e196302c43?auto=format&fit=crop&w=400&q=60'
   },
 
   // --- WESTERN CATEGORY ---
@@ -97,7 +97,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'سندويش زنجر دجاج',
     desc: 'صدر دجاج كريسبي حار مع خس ومخلل وجبنة شيدر وصوص زنجر حار في خبز صمون.',
     price: 38000,
-    img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'we-2',
@@ -105,7 +105,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'سندويش كريسبي دجاج',
     desc: 'أصابع دجاج مقرمشة غير حارة مع مايونيز وخس وجبنة شيدر في خبز صمون طازج.',
     price: 36000,
-    img: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'we-3',
@@ -113,7 +113,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'سندويش شيش طاووق',
     desc: 'قطع دجاج مشوية متبلة بالزبادي والليمون مع كريم ثوم ومخلل وبطاطا مقلية.',
     price: 34000,
-    img: 'https://images.unsplash.com/photo-1610614819513-58e34989848b?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1610614819513-58e34989848b?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'we-4',
@@ -121,7 +121,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'وجبة كريسبي عائلية',
     desc: '5 قطع دجاج كريسبي مقرمش مع بطاطا وسلطة كولسلو وكريم ثوم ومخلل.',
     price: 120000,
-    img: 'https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=400&q=60'
   },
 
   // --- SIDES CATEGORY ---
@@ -131,7 +131,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'صحن بطاطا مقلية',
     desc: 'بطاطا ذهبية مقرمشة ببهارات الآغا الخاصة مع صوص كاتشب.',
     price: 15000,
-    img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'si-2',
@@ -139,7 +139,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'سلطة كولسلو',
     desc: 'سلطة ملفوف وجزر مبشور بصوص المايونيز المنعش والمحضر في مطبخنا.',
     price: 10000,
-    img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'si-3',
@@ -147,7 +147,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'عبوة كريم ثوم إضافي',
     desc: 'ثوم بلدي كريمي محضر يومياً بخلطة الآغا السرية المتميزة.',
     price: 6000,
-    img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'si-4',
@@ -155,7 +155,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'مشروب غازي عبوة معدنية',
     desc: 'كوكا كولا، سبرايت، أو فانتا باردة جداً.',
     price: 8000,
-    img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=400&q=60'
   },
   {
     id: 'si-5',
@@ -163,7 +163,7 @@ const DEFAULT_MENU_ITEMS = [
     name: 'مياه معدنية صغيرة',
     desc: 'مياه معدنية طبيعية باردة ومنعشة.',
     price: 4000,
-    img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80'
+    img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=400&q=60'
   }
 ];
 
