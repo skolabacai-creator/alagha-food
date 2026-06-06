@@ -7,3 +7,10 @@ dist/
 *.log
 
 testsprite_tests/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
