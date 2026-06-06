@@ -5,3 +5,5 @@ antigravity/
 node_modules/
 dist/
 *.log
+
+testsprite_tests/

@@ -489,8 +489,20 @@ function setupCart() {
     const nameInput = document.getElementById('custName');
     const addrInput = document.getElementById('custAddr');
     
-    const name = nameInput.value.trim() || 'زبون';
-    const addr = addrInput.value.trim() || 'استلام من الصالة';
+    const name = nameInput.value.trim();
+    const addr = addrInput.value.trim();
+    
+    if (!name) {
+      showToast('يرجى كتابة الاسم الكريم أولاً! 👤');
+      nameInput.focus();
+      return;
+    }
+    
+    if (!addr) {
+      showToast('يرجى كتابة عنوان التوصيل أو طريقة الاستلام! 📍');
+      addrInput.focus();
+      return;
+    }
     
     const totalQty = cart.reduce((s, c) => s + c.qty, 0);
     const totalPrice = cart.reduce((s, c) => s + c.price * c.qty, 0);
